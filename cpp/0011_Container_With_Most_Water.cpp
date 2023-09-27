@@ -1,17 +1,26 @@
-// time: O(n log n), space: O(1)
+// time: O(n), space: O(1)
 class Solution {
 public:
-    string longestCommonPrefix(vector<string>& strs) {
-        string ans = "";
+    int maxArea(vector<int>& height) {
+        int left = 0, right = height.size() - 1;
+        int max_area = 0;
 
-        if (strs.size() == 1) return strs[0];
-        sort(strs.begin(), strs.end());
-        for (int i = 0; i < strs[0].size(); i++)
+        if (height.size() < 2) return 0;
+        if (height.size() == 2) return min(height[left], height[right]);
+
+        while (left < right)
         {
-            if (strs[0][i] != strs[strs.size() - 1][i]) return ans;
-            ans += strs[0][i];
+            max_area = max(max_area, (right - left) * min(height[left], height[right]));
+            if (height[left] < height[right])
+            {
+                left++;
+            }
+            else
+            {
+                right--;
+            }
         }
 
-        return ans;
+        return max_area;
     }
 };
